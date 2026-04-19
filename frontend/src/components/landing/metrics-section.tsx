@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useTranslation } from "@/components/language-provider";
 
 function AnimatedCounter({
   end,
@@ -81,9 +82,11 @@ const metrics = [
 ];
 
 export function MetricsSection() {
+  const { strings } = useTranslation();
   const [time, setTime] = useState("00:00:00");
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const metrics = strings.metricsSection.metrics;
 
   useEffect(() => {
     const formatTime = () =>
@@ -139,7 +142,7 @@ export function MetricsSection() {
           <div className="flex items-center gap-4 font-mono text-sm text-muted-foreground">
             <span className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              Live
+              {strings.metricsSection.live}
             </span>
             <span className="text-foreground/30">|</span>
             <span>{time}</span>
@@ -161,7 +164,6 @@ export function MetricsSection() {
               <AnimatedCounter
                 end={typeof metric.value === "number" ? metric.value : 0}
                 suffix={metric.suffix}
-                prefix={metric.prefix}
               />
               <div className="mt-4 text-lg text-muted-foreground">
                 {metric.label}

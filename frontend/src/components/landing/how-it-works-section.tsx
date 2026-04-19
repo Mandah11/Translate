@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "@/components/language-provider";
 
-const steps = [
+const codeExamples = [
   {
     number: "I",
-    title: "Connect your tools",
-    description:
-      "Integrate with your existing stack in minutes. We support 200+ data sources out of the box.",
     code: `import { optimus } from '@optimus/core'
 
 optimus.connect({
@@ -17,9 +15,6 @@ optimus.connect({
   },
   {
     number: "II",
-    title: "Build your workflow",
-    description:
-      "Design powerful automations with our visual builder or write code directly.",
     code: `optimus.workflow('process', {
   trigger: 'event',
   actions: [
@@ -31,9 +26,6 @@ optimus.connect({
   },
   {
     number: "III",
-    title: "Ship to production",
-    description:
-      "Deploy globally with zero configuration. Your app goes live in under 30 seconds.",
     code: `optimus.deploy({
   target: 'production',
   regions: 'auto'
@@ -44,9 +36,11 @@ optimus.connect({
 ];
 
 export function HowItWorksSection() {
+  const { strings } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const steps = strings.howItWorksSection.steps;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -94,7 +88,7 @@ export function HowItWorksSection() {
         <div className="mb-16 lg:mb-24">
           <span className="inline-flex items-center gap-3 text-sm font-mono text-background/50 mb-6">
             <span className="w-8 h-px bg-background/30" />
-            Process
+            {strings.howItWorksSection.label}
           </span>
           <h2
             className={`text-4xl lg:text-6xl font-display tracking-tight transition-all duration-700 ${
@@ -103,9 +97,9 @@ export function HowItWorksSection() {
                 : "opacity-0 translate-y-4"
             }`}
           >
-            Three steps.
+            {strings.howItWorksSection.headingLine1}
             <br />
-            <span className="text-background/50">Infinite possibilities.</span>
+            <span className="text-background/50">{strings.howItWorksSection.headingLine2}</span>
           </h2>
         </div>
 
@@ -161,14 +155,14 @@ export function HowItWorksSection() {
                   <div className="w-3 h-3 rounded-full bg-background/20" />
                 </div>
                 <span className="text-xs font-mono text-background/40">
-                  workflow.ts
+                  {strings.howItWorksSection.codeFile}
                 </span>
               </div>
 
               {/* Code content */}
               <div className="p-8 font-mono text-sm min-h-[280px]">
                 <pre className="text-background/70">
-                  {steps[activeStep].code.split("\n").map((line, lineIndex) => (
+                  {codeExamples[activeStep].code.split("\n").map((line, lineIndex) => (
                     <div
                       key={`${activeStep}-${lineIndex}`}
                       className="leading-loose code-line-reveal"
@@ -201,7 +195,7 @@ export function HowItWorksSection() {
               <div className="px-6 py-4 border-t border-background/10 flex items-center gap-3">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 <span className="text-xs font-mono text-background/40">
-                  Ready
+                  {strings.howItWorksSection.statusReady}
                 </span>
               </div>
             </div>

@@ -2,40 +2,11 @@
 
 import { ArrowUpRight } from "lucide-react";
 import { AnimatedWave } from "./animated-wave";
-
-const footerLinks = {
-  Product: [
-    { name: "Features", href: "#features" },
-    { name: "How it works", href: "#how-it-works" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Integrations", href: "#integrations" },
-  ],
-  Developers: [
-    { name: "Documentation", href: "#developers" },
-    { name: "API Reference", href: "#" },
-    { name: "SDK", href: "#developers" },
-    { name: "Status", href: "#" },
-  ],
-  Company: [
-    { name: "About", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Careers", href: "#", badge: "Hiring" },
-    { name: "Contact", href: "#" },
-  ],
-  Legal: [
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
-    { name: "Security", href: "#security" },
-  ],
-};
-
-const socialLinks = [
-  { name: "Twitter", href: "#" },
-  { name: "GitHub", href: "#" },
-  { name: "LinkedIn", href: "#" },
-];
+import { useTranslation } from "@/components/language-provider";
 
 export function FooterSection() {
+  const { strings } = useTranslation();
+
   return (
     <footer className="relative border-t border-foreground/10">
       {/* Animated wave background */}
@@ -57,13 +28,12 @@ export function FooterSection() {
               </a>
 
               <p className="text-muted-foreground leading-relaxed mb-8 max-w-xs">
-                The platform for teams who ship. Build, deploy, and scale with
-                unprecedented velocity.
+                {strings.footer.brandTagline}
               </p>
 
               {/* Social Links */}
               <div className="flex gap-6">
-                {socialLinks.map((link) => (
+                {strings.footer.social.map((link) => (
                   <a
                     key={link.name}
                     href={link.href}
@@ -77,41 +47,90 @@ export function FooterSection() {
             </div>
 
             {/* Link Columns */}
-            {Object.entries(footerLinks).map(([title, links]) => (
-              <div key={title}>
-                <h3 className="text-sm font-medium mb-6">{title}</h3>
-                <ul className="space-y-4">
-                  {links.map((link) => (
-                    <li key={link.name}>
-                      <a
-                        href={link.href}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2"
-                      >
-                        {link.name}
-                        {"badge" in link && link.badge && (
-                          <span className="text-xs px-2 py-0.5 bg-foreground text-background rounded-full">
-                            {link.badge}
-                          </span>
-                        )}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <div>
+              <h3 className="text-sm font-medium mb-6">
+                {strings.footer.sectionTitles.product}
+              </h3>
+              <ul className="space-y-4">
+                {strings.footer.product.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium mb-6">
+                {strings.footer.sectionTitles.developers}
+              </h3>
+              <ul className="space-y-4">
+                {strings.footer.developers.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium mb-6">
+                {strings.footer.sectionTitles.company}
+              </h3>
+              <ul className="space-y-4">
+                {strings.footer.company.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2"
+                    >
+                      {link.name}
+                      {"badge" in link && link.badge ? (
+                        <span className="text-xs px-2 py-0.5 bg-foreground text-background rounded-full">
+                          {link.badge}
+                        </span>
+                      ) : null}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium mb-6">
+                {strings.footer.sectionTitles.legal}
+              </h3>
+              <ul className="space-y-4">
+                {strings.footer.legal.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="py-8 border-t border-foreground/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            2025 Optimus. All rights reserved.
-          </p>
+          <p className="text-sm text-muted-foreground">{strings.footer.copyRight}</p>
 
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <span className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500" />
-              All systems operational
+              {strings.footer.systemStatus}
             </span>
           </div>
         </div>

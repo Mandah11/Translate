@@ -2,57 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Copy, Check } from "lucide-react";
-
-const codeExamples = [
-  {
-    label: "Install",
-    code: `npm install @optimus/sdk
-
-# or
-yarn add @optimus/sdk
-pnpm add @optimus/sdk`,
-  },
-  {
-    label: "Initialize",
-    code: `import { Optimus } from '@optimus/sdk'
-
-const optimus = new Optimus({
-  apiKey: process.env.OPTIMUS_KEY
-})`,
-  },
-  {
-    label: "Deploy",
-    code: `const app = await optimus.deploy({
-  name: 'my-app',
-  region: 'auto',
-  scaling: {
-    min: 1,
-    max: 100
-  }
-})
-
-console.log('Live at:', app.url)`,
-  },
-];
-
-const features = [
-  {
-    title: "TypeScript native",
-    description: "Full type safety with auto-generated types.",
-  },
-  {
-    title: "Zero config",
-    description: "Sensible defaults that just work.",
-  },
-  {
-    title: "Edge-ready",
-    description: "Runs anywhere: Node, Deno, Bun, browsers.",
-  },
-  {
-    title: "12KB gzipped",
-    description: "Lightweight with zero dependencies.",
-  },
-];
+import { useTranslation } from "@/components/language-provider";
 
 const codeAnimationStyles = `
   .dev-code-line {
@@ -83,13 +33,16 @@ const codeAnimationStyles = `
 `;
 
 export function DevelopersSection() {
+  const { strings } = useTranslation();
   const [activeTab, setActiveTab] = useState(0);
   const [copied, setCopied] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const codeTabs = strings.developersSection.codeTabs;
+  const featureItems = strings.developersSection.features;
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(codeExamples[activeTab].code);
+    navigator.clipboard.writeText(codeTabs[activeTab].code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -125,21 +78,20 @@ export function DevelopersSection() {
           >
             <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
               <span className="w-8 h-px bg-foreground/30" />
-              For developers
+              {strings.developersSection.label}
             </span>
             <h2 className="text-4xl lg:text-6xl font-display tracking-tight mb-8">
-              Built by devs.
+              {strings.developersSection.headingLine1}
               <br />
-              <span className="text-muted-foreground">For devs.</span>
+              <span className="text-muted-foreground">{strings.developersSection.headingLine2}</span>
             </h2>
             <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
-              A thoughtfully designed SDK that gets out of your way. Ship faster
-              with intuitive APIs and exceptional documentation.
+              {strings.developersSection.description}
             </p>
 
             {/* Features */}
             <div className="grid grid-cols-2 gap-6">
-              {features.map((feature, index) => (
+              {featureItems.map((feature, index) => (
                 <div
                   key={feature.title}
                   className={`transition-all duration-500 ${
@@ -169,9 +121,9 @@ export function DevelopersSection() {
             <div className="border border-foreground/10">
               {/* Tabs */}
               <div className="flex items-center border-b border-foreground/10">
-                {codeExamples.map((example, idx) => (
+                {codeTabs.map((tab, idx) => (
                   <button
-                    key={example.label}
+                    key={tab.label}
                     type="button"
                     onClick={() => setActiveTab(idx)}
                     className={`px-6 py-4 text-sm font-mono transition-colors relative ${
@@ -180,7 +132,7 @@ export function DevelopersSection() {
                         : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
-                    {example.label}
+                    {tab.label}
                     {activeTab === idx && (
                       <span className="absolute bottom-0 left-0 right-0 h-px bg-foreground" />
                     )}
@@ -204,7 +156,7 @@ export function DevelopersSection() {
               {/* Code content */}
               <div className="p-8 font-mono text-sm bg-foreground/[0.01] min-h-[220px]">
                 <pre className="text-foreground/80">
-                  {codeExamples[activeTab].code
+                  {codeTabs[activeTab].code
                     .split("\n")
                     .map((line, lineIndex) => (
                       <div
@@ -237,14 +189,14 @@ export function DevelopersSection() {
                 href="#"
                 className="text-foreground hover:underline underline-offset-4"
               >
-                Read the docs
+                {strings.developersSection.readDocs}
               </a>
               <span className="text-foreground/20">|</span>
               <a
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
               >
-                View on GitHub
+                {strings.developersSection.viewGitHub}
               </a>
             </div>
           </div>

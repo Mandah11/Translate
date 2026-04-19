@@ -32,6 +32,11 @@ const translationJobSchema = new Schema(
       default: null,
       trim: true,
     },
+    translatedText: {
+      type: String,
+      default: null,
+      trim: true,
+    },
     reviewedFileUrl: {
       type: String,
       default: null,
