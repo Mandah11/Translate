@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "@/components/language-provider";
 
 function AnimatedCounter({
@@ -54,33 +54,6 @@ function AnimatedCounter({
   );
 }
 
-const metrics = [
-  {
-    value: 2847392,
-    suffix: "",
-    prefix: "",
-    label: "API requests today",
-  },
-  {
-    value: 99,
-    suffix: ".99%",
-    prefix: "",
-    label: "Uptime this quarter",
-  },
-  {
-    value: 23,
-    suffix: "ms",
-    prefix: "",
-    label: "Average response time",
-  },
-  {
-    value: 184,
-    suffix: "",
-    prefix: "",
-    label: "Countries served",
-  },
-];
-
 export function MetricsSection() {
   const { strings } = useTranslation();
   const [time, setTime] = useState("00:00:00");
@@ -125,7 +98,7 @@ export function MetricsSection() {
           <div>
             <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
               <span className="w-8 h-px bg-foreground/30" />
-              Live metrics
+              {strings.metricsSection.label}
             </span>
             <h2
               className={`text-4xl lg:text-6xl font-display tracking-tight transition-all duration-700 ${
@@ -134,9 +107,9 @@ export function MetricsSection() {
                   : "opacity-0 translate-y-4"
               }`}
             >
-              Performance you
+              {strings.metricsSection.headingLine1}
               <br />
-              can measure.
+              {strings.metricsSection.headingLine2}
             </h2>
           </div>
           <div className="flex items-center gap-4 font-mono text-sm text-muted-foreground">

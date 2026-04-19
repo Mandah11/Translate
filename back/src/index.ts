@@ -38,11 +38,18 @@ const upload = multer({
   fileFilter: (_req, file, cb) => {
     const allowedMimes = [
       "text/plain",
+      "text/csv",
       "application/pdf",
       "image/svg+xml",
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "application/x-subrip",
     ];
-    if (allowedMimes.includes(file.mimetype) || file.originalname.endsWith(".svg")) {
+    if (
+      allowedMimes.includes(file.mimetype) ||
+      /\.(svg|srt|vtt)$/i.test(file.originalname)
+    ) {
       cb(null, true);
     } else {
       cb(new Error(`File type not supported: ${file.mimetype}`));
@@ -51,6 +58,18 @@ const upload = multer({
 });
 
 type AuthenticatedRequest = Request & { user?: any };
+
+function canAccessJob(user: any, job: any) {
+  if (!user || !job) {
+    return false;
+  }
+
+  if (user.role === "admin") {
+    return true;
+  }
+
+  return String(job.user) === String(user._id) || String(job.user?._id) === String(user._id);
+}
 
 async function authenticate(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
@@ -123,6 +142,17 @@ async function translateTextWithGemini(text: string, targetLanguage: string) {
   return String(translated).trim();
 }
 
+function buildReviewedText(job: any, reviewedText?: string, adminNote?: string) {
+  const sections = [
+    reviewedText?.trim() || job.translatedText || "",
+    adminNote?.trim()
+      ? `Reviewer note:\n${adminNote.trim()}`
+      : "",
+  ].filter(Boolean);
+
+  return sections.join("\n\n");
+}
+
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(uploadDir));
@@ -188,29 +218,26 @@ app.post("/api/auth/login", async (req: Request, res: Response, next: NextFuncti
   }
 });
 
-app.post("/api/jobs/upload", upload.single("originalFile"), async (req: Request, res: Response, next: NextFunction) => {
+app.post("/api/jobs/upload", authenticate, upload.single("originalFile"), async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const file = req.file;
-    const { userId, sourceLanguage, targetLanguage } = req.body;
+    const { sourceLanguage, targetLanguage, sourceText, translationNote } = req.body;
 
-    if (!file || !userId || !targetLanguage) {
+    if (!file || !targetLanguage) {
       return res.status(400).json({
-        error: "originalFile, userId, and targetLanguage are required",
+        error: "originalFile and targetLanguage are required",
       });
-    }
-
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
     }
 
     const fileUrl = `/uploads/${file.filename}`;
     const job = new TranslationJob({
-      user: user._id,
+      user: req.user?._id,
       originalFileName: file.originalname,
       originalFileUrl: fileUrl,
       sourceLanguage: sourceLanguage ?? "auto",
       targetLanguage,
+      sourceText: sourceText ?? "",
+      translationNote: translationNote ?? "",
       status: "uploaded",
     });
 
@@ -227,16 +254,27 @@ app.post("/api/jobs/:id/translate", authenticate, async (req: AuthenticatedReque
     const { id } = req.params;
     const { sourceText, addWatermark } = req.body;
 
-    if (!sourceText) {
-      return res.status(400).json({ error: "sourceText is required for translation" });
-    }
-
     const job = await TranslationJob.findById(id).populate("user", "fullName email");
     if (!job) {
       return res.status(404).json({ error: "Translation job not found" });
     }
 
-    let translatedText = await translateTextWithGemini(sourceText, job.targetLanguage);
+    if (!canAccessJob(req.user, job)) {
+      return res.status(403).json({ error: "Not allowed to translate this job" });
+    }
+
+    const effectiveSourceText =
+      typeof sourceText === "string" && sourceText.trim()
+        ? sourceText.trim()
+        : job.sourceText?.trim() ||
+          `Translate the uploaded file "${job.originalFileName}" from ${job.sourceLanguage} to ${job.targetLanguage}. ${
+            job.translationNote ? `Reviewer instruction: ${job.translationNote}` : ""
+          }`;
+
+    job.status = "translating";
+    await job.save();
+
+    let translatedText = await translateTextWithGemini(effectiveSourceText, job.targetLanguage);
     
     // Add watermark/signature if requested
     if (addWatermark) {
@@ -254,6 +292,7 @@ app.post("/api/jobs/:id/translate", authenticate, async (req: AuthenticatedReque
 
     job.aiTranslatedFileUrl = `/uploads/${translatedFileName}`;
     job.status = "translated";
+    job.sourceText = effectiveSourceText;
     job.translatedText = translatedText;
     await job.save();
 
@@ -263,14 +302,36 @@ app.post("/api/jobs/:id/translate", authenticate, async (req: AuthenticatedReque
   }
 });
 
-app.get("/api/jobs", async (_req: Request, res: Response, next: NextFunction) => {
+app.get("/api/jobs", authenticate, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
-    const jobs = await TranslationJob.find()
+    const query = req.user?.role === "admin" ? {} : { user: req.user?._id };
+    const jobs = await TranslationJob.find(query)
       .populate("user", "fullName email role")
       .populate("reviewedBy", "fullName email role")
       .sort({ createdAt: -1 });
 
     return res.json({ jobs });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post("/api/jobs/:id/request-review", authenticate, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  try {
+    const job = await TranslationJob.findById(req.params.id);
+    if (!job) {
+      return res.status(404).json({ error: "Translation job not found" });
+    }
+
+    if (!canAccessJob(req.user, job)) {
+      return res.status(403).json({ error: "Not allowed to update this job" });
+    }
+
+    job.reviewRequested = true;
+    job.status = "review_requested";
+    await job.save();
+
+    return res.json({ message: "Review requested", job });
   } catch (error) {
     next(error);
   }
@@ -292,7 +353,7 @@ app.get("/api/admin/jobs", authenticate, adminOnly, async (_req: Request, res: R
 app.post("/api/admin/jobs/:id/review", authenticate, adminOnly, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const { status, adminNote, reviewedFileUrl } = req.body;
+    const { status, adminNote, reviewedFileUrl, reviewedText } = req.body;
 
     const allowedStatus = ["review_requested", "reviewed", "translated"];
     if (!allowedStatus.includes(status)) {
@@ -308,7 +369,14 @@ app.post("/api/admin/jobs/:id/review", authenticate, adminOnly, async (req: Auth
     job.adminNote = adminNote ?? job.adminNote;
     job.reviewRequested = status === "review_requested";
     job.reviewedBy = req.user?._id ?? job.reviewedBy;
-    if (reviewedFileUrl) {
+
+    if (status === "reviewed") {
+      const finalReviewedText = buildReviewedText(job, reviewedText, adminNote);
+      const reviewedFileName = `reviewed-${job._id}.txt`;
+      const reviewedFilePath = path.join(uploadDir, reviewedFileName);
+      fs.writeFileSync(reviewedFilePath, finalReviewedText, "utf-8");
+      job.reviewedFileUrl = `/uploads/${reviewedFileName}`;
+    } else if (reviewedFileUrl) {
       job.reviewedFileUrl = reviewedFileUrl;
     }
 

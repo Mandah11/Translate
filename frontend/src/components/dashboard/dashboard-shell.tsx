@@ -34,7 +34,7 @@ export function DashboardShell({
                     Optimus Translate
                   </p>
                   <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
-                    Human + AI delivery
+                    AI draft + human review
                   </p>
                 </div>
               </Link>

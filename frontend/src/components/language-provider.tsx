@@ -12,14 +12,14 @@ interface LanguageContextValue {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem("preferred-language");
-    if (stored === "mn" || stored === "en") {
-      setLanguage(stored);
+  const [language, setLanguage] = useState<Language>(() => {
+    if (typeof window === "undefined") {
+      return "en";
     }
-  }, []);
+
+    const stored = window.localStorage.getItem("preferred-language");
+    return stored === "mn" || stored === "en" ? stored : "en";
+  });
 
   useEffect(() => {
     window.localStorage.setItem("preferred-language", language);

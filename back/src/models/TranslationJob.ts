@@ -1,4 +1,4 @@
-import { Schema, model, models } from "mongoose";
+import { InferSchemaType, Model, Schema, model, models } from "mongoose";
 
 const translationJobSchema = new Schema(
   {
@@ -25,6 +25,16 @@ const translationJobSchema = new Schema(
     targetLanguage: {
       type: String,
       required: true,
+      trim: true,
+    },
+    sourceText: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    translationNote: {
+      type: String,
+      default: "",
       trim: true,
     },
     aiTranslatedFileUrl: {
@@ -91,7 +101,15 @@ const translationJobSchema = new Schema(
   }
 );
 
+export type TranslationJobDocument = InferSchemaType<typeof translationJobSchema>;
+
+type TranslationJobModel = Model<TranslationJobDocument>;
+
 const TranslationJob =
-  models.TranslationJob || model("TranslationJob", translationJobSchema);
+  (models.TranslationJob as TranslationJobModel | undefined) ||
+  model<TranslationJobDocument, TranslationJobModel>(
+    "TranslationJob",
+    translationJobSchema,
+  );
 
 export default TranslationJob;
