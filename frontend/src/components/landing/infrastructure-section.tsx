@@ -1,16 +1,7 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "@/components/language-provider";
-
-const locations = [
-  { city: "San Francisco", region: "US West", latency: "12ms" },
-  { city: "New York", region: "US East", latency: "18ms" },
-  { city: "London", region: "Europe", latency: "24ms" },
-  { city: "Tokyo", region: "Asia Pacific", latency: "32ms" },
-  { city: "Sydney", region: "Oceania", latency: "45ms" },
-  { city: "Sao Paulo", region: "South America", latency: "38ms" },
-];
 
 export function InfrastructureSection() {
   const { strings } = useTranslation();
@@ -18,6 +9,7 @@ export function InfrastructureSection() {
   const [activeLocation, setActiveLocation] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const stats = strings.infrastructureSection.stats;
+  const locations = strings.infrastructureSection.locations;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -36,7 +28,7 @@ export function InfrastructureSection() {
       setActiveLocation((prev) => (prev + 1) % locations.length);
     }, 2000);
     return () => clearInterval(interval);
-  }, []);
+  }, [locations.length]);
 
   return (
     <section

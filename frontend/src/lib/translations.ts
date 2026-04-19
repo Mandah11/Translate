@@ -12,28 +12,28 @@ export const translations = {
       languageLabel: "Language",
     },
     hero: {
-      tagline: "AI translation with human review",
-      headingLine1: "Ship translated",
-      headingLine2: "files",
-      words: ["faster", "cleaner", "safer", "together"],
+      tagline: "Translate important files into Mongolian",
+      headingLine1: "From any language",
+      headingLine2: "to Mongolian",
+      words: ["PDF", "DOCX", "XLSX", "PPTX"],
       description:
-        "Upload source files, generate AI drafts in minutes, request editor review, and keep every delivery version in one workspace.",
-      openUserWorkspace: "Start a translation",
+        "We translate important materials like PDF, DOC, Excel, slide decks, and subtitle files into Mongolian. Upload the file, generate the first draft, and request human review when needed.",
+      openUserWorkspace: "Translate a file",
       openAdminDesk: "Open review desk",
       stats: [
-        { value: "<10 min", label: "first draft turnaround", company: "Finance teams" },
-        { value: "2 versions", label: "AI + reviewed output", company: "Legal ops" },
-        { value: "1 workspace", label: "history, files, notes", company: "Operations" },
-        { value: "24/7", label: "shared handoff visibility", company: "Admin teams" },
+        { value: "Any language", label: "source language accepted", company: "Contracts" },
+        { value: "Mongolian", label: "final target language", company: "Reports" },
+        { value: "2 versions", label: "AI + reviewed output", company: "Policies" },
+        { value: "Optional", label: "name stamp on draft", company: "Client copy" },
       ],
     },
     cta: {
-      heading: "Translate, review, and deliver from one place.",
+      heading: "Turn important documents into clear Mongolian.",
       description:
-        "Move from upload to reviewed download without losing file context, notes, or version history.",
+        "This workflow is built for translation only: upload a file, generate the Mongolian draft, and keep AI plus reviewed versions in one place.",
       startTranslating: "Open user workspace",
       reviewAsAdmin: "Open admin desk",
-      footerNote: "Demo credentials are included in the dashboard screens.",
+      footerNote: "Optional text stamp can be added to the AI draft.",
     },
     featuresSection: {
       label: "Workflow",
@@ -42,16 +42,16 @@ export const translations = {
       items: [
         {
           number: "01",
-          title: "File-first intake",
+          title: "Important file intake",
           description:
-            "Upload PDF, DOCX, XLSX, PPTX, TXT, CSV, and subtitle files while keeping source language, target language, and instructions together.",
+            "Upload PDF, DOCX, XLSX, PPTX, TXT, CSV, and subtitle files that need to be translated into Mongolian.",
           visual: "deploy",
         },
         {
           number: "02",
-          title: "AI draft generation",
+          title: "Any language to Mongolian",
           description:
-            "Generate the first pass instantly so teams can preview translated text, compare versions, and move faster on urgent work.",
+            "The workflow is focused on one destination language, so the entire job setup, wording review, and delivery flow stay aligned around Mongolian output.",
           visual: "ai",
         },
         {
@@ -63,9 +63,9 @@ export const translations = {
         },
         {
           number: "04",
-          title: "Downloadable outputs",
+          title: "Optional text stamp",
           description:
-            "Keep AI and reviewed files as separate downloads so the final delivery is traceable and easy to audit.",
+            "If needed, the AI draft can include a visible text stamp with translator name, email, date, and original file reference.",
           visual: "security",
         },
       ],
@@ -99,17 +99,25 @@ export const translations = {
     },
     infrastructureSection: {
       label: "Operations",
-      headingLine1: "Everything the team needs,",
-      headingLine2: "visible in one place.",
+      headingLine1: "Everything needed for",
+      headingLine2: "document translation.",
       description:
-        "The workspace keeps upload details, translation status, notes, file links, and review ownership aligned so handoffs stay clean.",
+        "The workspace keeps file details, Mongolian draft status, user notes, and reviewer ownership aligned so important materials do not get lost in handoff.",
       stats: [
         { value: "1", label: "shared job record" },
         { value: "2", label: "delivery versions" },
         { value: "100MB", label: "file size limit" },
       ],
-      networkLabel: "Job status board",
-      allOperational: "All workflows available",
+      networkLabel: "Common file requests",
+      allOperational: "Ready to translate",
+      locations: [
+        { city: "Annual report", region: "PDF", latency: "Financial" },
+        { city: "Board memo", region: "DOCX", latency: "Internal" },
+        { city: "Product strings", region: "XLSX", latency: "App UI" },
+        { city: "Presentation deck", region: "PPTX", latency: "Client-facing" },
+        { city: "Subtitle sheet", region: "SRT", latency: "Video" },
+        { city: "Policy draft", region: "TXT", latency: "Compliance" },
+      ],
     },
     metricsSection: {
       label: "Live metrics",
@@ -128,7 +136,7 @@ export const translations = {
       headingLine1: "Works with the documents",
       headingLine2: "teams already send.",
       description:
-        "From reports and contracts to subtitle files and spreadsheets, the intake flow is designed for the messy files real teams use.",
+        "From reports and contracts to subtitle files and spreadsheets, the intake flow is built for documents teams urgently need in Mongolian.",
       integrations: [
         { name: "PDF", category: "Reports" },
         { name: "DOCX", category: "Policies" },
@@ -149,8 +157,8 @@ export const translations = {
       headingLine1: "Version clarity",
       headingLine2: "is non-negotiable.",
       description:
-        "Every job keeps a clear separation between uploaded source files, AI drafts, and reviewed outputs so teams know exactly what was delivered.",
-      certifications: ["Per-job history", "Role-based views", "Separate outputs", "Audit-friendly notes"],
+        "Every job keeps a clear separation between uploaded source files, Mongolian AI drafts, optional text stamps, and reviewed outputs so teams know exactly what was delivered.",
+      certifications: ["Per-job history", "Role-based views", "Separate outputs", "Optional text stamp"],
       features: [
         {
           title: "Stored original file",
@@ -158,24 +166,24 @@ export const translations = {
         },
         {
           title: "AI draft visibility",
-          description: "Users and admins can inspect the first-pass output before deciding whether review is needed.",
+          description: "Users and admins can inspect the Mongolian first-pass output before deciding whether review is needed.",
         },
         {
           title: "Review ownership",
           description: "Admin actions are attached to the reviewer so handoffs stay accountable.",
         },
         {
-          title: "Reviewed output delivery",
-          description: "Final edited files are saved separately instead of overwriting the AI version.",
+          title: "Text stamp option",
+          description: "For draft-sharing needs, the AI version can include a text stamp with translator identity and timestamp.",
         },
       ],
     },
     developersSection: {
-      label: "Automation",
+      label: "Workflow",
       headingLine1: "Simple API.",
-      headingLine2: "Practical workflow.",
+      headingLine2: "Focused on Mongolian output.",
       description:
-        "The backend exposes straightforward endpoints for auth, upload, translation, queueing, and review so you can extend the platform without rebuilding the basics.",
+        "The backend exposes straightforward endpoints for auth, upload, translation, queueing, and review so teams can move important files from any language into Mongolian without rebuilding the basics.",
       features: [
         { title: "Typed requests", description: "Frontend helpers keep auth headers, job payloads, and file URLs consistent." },
         { title: "Queue aware", description: "Review requests move jobs into the admin queue with a single state change." },
@@ -198,16 +206,20 @@ export const translations = {
       ],
       readDocs: "Review the API flow",
       viewGitHub: "Inspect implementation",
+      copyLabel: "Copy code",
     },
     pricingSection: {
-      label: "Plans",
-      headingLine1: "Choose the workflow",
-      headingHighlight: "that fits your team.",
+      label: "Use cases",
+      headingLine1: "Choose the setup",
+      headingHighlight: "that fits your documents.",
       description:
-        "Start with AI-only delivery or add a human review lane for teams that need an editor in the loop.",
+        "Start with AI-only Mongolian translation or add a human review lane for documents that need extra care.",
       monthly: "Monthly",
       annual: "Annual",
       saveLabel: "Save 20%",
+      popularLabel: "Most popular",
+      monthlySuffix: "/month",
+      customLabel: "Custom",
       plans: [
         {
           name: "Starter",
@@ -285,28 +297,28 @@ export const translations = {
       languageLabel: "Хэл",
     },
     hero: {
-      tagline: "AI орчуулга, хүний хяналттай",
-      headingLine1: "Орчуулсан",
-      headingLine2: "файлаа",
-      words: ["хурдан", "цэвэр", "найдвартай", "хамтдаа"],
+      tagline: "Чухал файлаа Монгол хэл рүү орчуулна",
+      headingLine1: "Ямар ч хэлнээс",
+      headingLine2: "Монгол руу",
+      words: ["PDF", "DOCX", "XLSX", "PPTX"],
       description:
-        "Файлаа оруулаад AI эхний хувилбар гаргаж, шаардлагатай үед редакторын хяналт авч, бүх хувилбараа нэг workspace-д хадгална.",
-      openUserWorkspace: "Орчуулга эхлүүлэх",
+        "PDF, DOC, Excel, слайд, subtitle зэрэг чухал материалуудыг Монгол хэл рүү орчуулна. Файлаа оруулаад эхний draft гаргаж, шаардлагатай үед хүний хяналт авна.",
+      openUserWorkspace: "Файл орчуулах",
       openAdminDesk: "Хяналтын самбар нээх",
       stats: [
-        { value: "<10 мин", label: "эхний draft", company: "Санхүүгийн баг" },
-        { value: "2 хувилбар", label: "AI + reviewed output", company: "Хууль эрх зүй" },
-        { value: "1 workspace", label: "түүх, файл, тэмдэглэл", company: "Операц" },
-        { value: "24/7", label: "handoff харагдац", company: "Админ баг" },
+        { value: "Ямар ч хэл", label: "эх хэл хамаарахгүй", company: "Гэрээ" },
+        { value: "Монгол", label: "эцсийн зорилтот хэл", company: "Тайлан" },
+        { value: "2 хувилбар", label: "AI + reviewed output", company: "Бодлого" },
+        { value: "Сонголтоор", label: "текстэн тамга", company: "Харилцагч" },
       ],
     },
     cta: {
-      heading: "Орчуулга, хяналт, хүргэлтээ нэг дороос удирд.",
+      heading: "Чухал баримтаа ойлгомжтой Монгол болго.",
       description:
-        "Файл upload-аас эхлээд reviewed download хүртэлх бүх алхмыг file context болон notes-тай нь хадгална.",
+        "Энэ workflow нь зөвхөн орчуулгад зориулсан: файлаа оруулж, Монгол draft гаргаад, AI болон reviewed хувилбараа нэг дор хадгална.",
       startTranslating: "User workspace нээх",
       reviewAsAdmin: "Admin desk нээх",
-      footerNote: "Dashboard дээр demo нэвтрэх мэдээлэл харагдана.",
+      footerNote: "Хүсвэл AI draft дээр текстэн тамга нэмж болно.",
     },
     featuresSection: {
       label: "Урсгал",
@@ -315,16 +327,16 @@ export const translations = {
       items: [
         {
           number: "01",
-          title: "Файл төвтэй intake",
+          title: "Чухал файлын intake",
           description:
-            "PDF, DOCX, XLSX, PPTX, TXT, CSV, subtitle файлтай хамт source/target хэл болон зааврыг нэг job дээр хадгална.",
+            "PDF, DOCX, XLSX, PPTX, TXT, CSV, subtitle зэрэг файлуудыг Монгол хэл рүү орчуулах job болгон хадгална.",
           visual: "deploy",
         },
         {
           number: "02",
-          title: "AI эхний хувилбар",
+          title: "Ямар ч хэлнээс Монгол",
           description:
-            "Эхний орчуулгыг хурдан гаргаж preview, version comparison, яаралтай ажлын handoff-ыг түргэсгэнэ.",
+            "Workflow бүхэлдээ нэг зорилтот хэл дээр төвлөрсөн тул job тохиргоо, нэр томьёо, хяналт бүгд Монгол output дээр төвлөрнө.",
           visual: "ai",
         },
         {
@@ -336,9 +348,9 @@ export const translations = {
         },
         {
           number: "04",
-          title: "Тусдаа download output",
+          title: "Сонголттой текстэн тамга",
           description:
-            "AI болон reviewed файлыг тусдаа хадгалснаар хүргэлт илүү ойлгомжтой, audit хийхэд амар болно.",
+            "Хэрэгтэй бол AI draft дээр орчуулагчийн нэр, имэйл, огноо, эх файлын мэдээлэлтэй текстэн тамга нэмж болно.",
           visual: "security",
         },
       ],
@@ -372,17 +384,25 @@ export const translations = {
     },
     infrastructureSection: {
       label: "Операц",
-      headingLine1: "Багт хэрэгтэй бүх зүйл,",
-      headingLine2: "нэг дэлгэц дээр.",
+      headingLine1: "Баримт орчуулгад хэрэгтэй",
+      headingLine2: "бүх зүйл нэг дор.",
       description:
-        "Upload detail, translation status, note, file link, review owner бүгд нэг дор харагдсанаар handoff цэгцтэй үлдэнэ.",
+        "Файлын detail, Монгол draft статус, note, file link, review owner бүгд нэг дор харагдсанаар чухал материал handoff дээр алдагдахгүй.",
       stats: [
         { value: "1", label: "shared job record" },
         { value: "2", label: "delivery version" },
         { value: "100MB", label: "файлын дээд хэмжээ" },
       ],
-      networkLabel: "Job статусын самбар",
-      allOperational: "Бүх workflow нээлттэй",
+      networkLabel: "Түгээмэл файлын хүсэлтүүд",
+      allOperational: "Орчуулахад бэлэн",
+      locations: [
+        { city: "Жилийн тайлан", region: "PDF", latency: "Санхүү" },
+        { city: "Удирдах зөвлөлийн note", region: "DOCX", latency: "Дотоод" },
+        { city: "Бүтээгдэхүүний string", region: "XLSX", latency: "App UI" },
+        { city: "Танилцуулгын deck", region: "PPTX", latency: "Харилцагч" },
+        { city: "Subtitle файл", region: "SRT", latency: "Видео" },
+        { city: "Бодлогын draft", region: "TXT", latency: "Compliance" },
+      ],
     },
     metricsSection: {
       label: "Амьд үзүүлэлт",
@@ -401,7 +421,7 @@ export const translations = {
       headingLine1: "Багуудын өдөр тутам",
       headingLine2: "хүлээж авдаг файлуудтай ажиллана.",
       description:
-        "Тайлан, гэрээ, subtitle, spreadsheet гээд бодит ажил дээр ирдэг файлуудыг intake урсгалдаа багтаасан.",
+        "Тайлан, гэрээ, subtitle, spreadsheet гээд багуудад яаралтай Монгол хэл дээр хэрэг болдог файлуудыг intake урсгалдаа багтаасан.",
       integrations: [
         { name: "PDF", category: "Тайлан" },
         { name: "DOCX", category: "Баримт" },
@@ -422,8 +442,8 @@ export const translations = {
       headingLine1: "Хувилбарын ялгаа",
       headingLine2: "маш тодорхой байх ёстой.",
       description:
-        "Upload source, AI draft, reviewed output гурвыг тусад нь хадгалснаар баг яг юу хүргэснээ ойлгомжтой харна.",
-      certifications: ["Job түүх", "Role-based view", "Тусдаа output", "Audit note"],
+        "Upload source, Монгол AI draft, сонголттой текстэн тамга, reviewed output бүгд тусдаа хадгалагддаг тул баг яг юу гаргаснаа ойлгомжтой харна.",
+      certifications: ["Job түүх", "Role-based view", "Тусдаа output", "Сонголттой текстэн тамга"],
       features: [
         {
           title: "Эх файл хадгална",
@@ -431,24 +451,24 @@ export const translations = {
         },
         {
           title: "AI draft харагдана",
-          description: "Review хэрэгтэй эсэхийг шийдэхийн өмнө user, admin аль аль нь эхний хувилбарыг үзнэ.",
+          description: "Review хэрэгтэй эсэхийг шийдэхийн өмнө user, admin аль аль нь Монгол draft-ыг үзнэ.",
         },
         {
           title: "Review owner тэмдэглэнэ",
           description: "Admin үйлдэл reviewer-тэйгээ холбогдож, handoff илүү хариуцлагатай болно.",
         },
         {
-          title: "Reviewed output тусдаа",
-          description: "Эцсийн edited file нь AI хувилбарыг дарж устгахгүйгээр тусад нь хадгалагдана.",
+          title: "Текстэн тамганы сонголт",
+          description: "Draft хуваалцах хэрэгцээнд AI хувилбар дээр орчуулагчийн мэдээлэлтэй текстэн тамга нэмж болно.",
         },
       ],
     },
     developersSection: {
-      label: "Автоматжуулалт",
+      label: "Workflow",
       headingLine1: "Энгийн API.",
-      headingLine2: "Ашигтай workflow.",
+      headingLine2: "Монгол output дээр төвлөрсөн.",
       description:
-        "Backend нь auth, upload, translation, queue, review endpoint-уудтай тул үндсэн урсгалыг дахин шинээр босгох шаардлагагүй.",
+        "Backend нь auth, upload, translation, queue, review endpoint-уудтай тул ямар ч хэлтэй баримтыг Монгол руу шилжүүлэх үндсэн урсгалыг дахин шинээр босгох шаардлагагүй.",
       features: [
         { title: "Typed request", description: "Frontend helper-ууд auth header, job payload, file URL-ийг нэг мөр болгоно." },
         { title: "Queue-aware", description: "Review request нь job-ийн state-г сольж admin queue руу оруулна." },
@@ -471,16 +491,20 @@ export const translations = {
       ],
       readDocs: "API урсгал харах",
       viewGitHub: "Implementation үзэх",
+      copyLabel: "Код хуулах",
     },
     pricingSection: {
-      label: "Багц",
-      headingLine1: "Танай багт тохирох",
-      headingHighlight: "workflow-г сонго.",
+      label: "Хэрэглээ",
+      headingLine1: "Баримтдаа тохирох",
+      headingHighlight: "тохиргоог сонго.",
       description:
-        "AI-only delivery-оор эхлээд, шаардлагатай үед human review шугам нэмж болно.",
+        "AI-only Монгол орчуулгаас эхлээд, илүү нягт хяналт хэрэгтэй баримт дээр human review нэмж болно.",
       monthly: "Сар",
       annual: "Жил",
       saveLabel: "20% хэмнэнэ",
+      popularLabel: "Хамгийн түгээмэл",
+      monthlySuffix: "/сар",
+      customLabel: "Тохиролцоно",
       plans: [
         {
           name: "Starter",

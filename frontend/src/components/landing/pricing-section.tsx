@@ -76,7 +76,7 @@ export function PricingSection() {
             >
               {plan.popular && (
                 <span className="absolute -top-3 left-8 px-3 py-1 bg-foreground text-primary-foreground text-xs font-mono uppercase tracking-widest">
-                  Most Popular
+                  {strings.pricingSection.popularLabel}
                 </span>
               )}
 
@@ -100,11 +100,11 @@ export function PricingSection() {
                     <span className="font-display text-5xl lg:text-6xl text-foreground">
                       ${isAnnual ? plan.price.annual : plan.price.monthly}
                     </span>
-                    <span className="text-muted-foreground">/month</span>
+                    <span className="text-muted-foreground">{strings.pricingSection.monthlySuffix}</span>
                   </div>
                 ) : (
                   <span className="font-display text-4xl text-foreground">
-                    Custom
+                    {strings.pricingSection.customLabel}
                   </span>
                 )}
               </div>

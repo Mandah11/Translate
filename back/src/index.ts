@@ -276,11 +276,11 @@ app.post("/api/jobs/:id/translate", authenticate, async (req: AuthenticatedReque
 
     let translatedText = await translateTextWithGemini(effectiveSourceText, job.targetLanguage);
     
-    // Add watermark/signature if requested
+    // Add a visible text stamp if requested
     if (addWatermark) {
       const user = job.user as any;
       const now = new Date();
-      const signature = `\n\n---\n📝 Translated by: ${user.fullName}\n📧 Email: ${user.email}\n📅 Date: ${now.toLocaleString()}\n📄 Original file: ${job.originalFileName}\n---`;
+      const signature = `\n\n---\nDraft stamp: ${user.fullName}\nEmail: ${user.email}\nDate: ${now.toLocaleString()}\nOriginal file: ${job.originalFileName}\n---`;
       translatedText = translatedText + signature;
       job.watermarked = true;
       job.signature = signature;

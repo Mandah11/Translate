@@ -87,7 +87,7 @@ export function UploadPanel({
             <TextBlock id="translationNote" label="Translation note" defaultValue="Keep the investor-facing tone formal and preserve product names in English where needed." minHeight="min-h-28" />
             <label className="flex items-center gap-3 text-sm text-muted-foreground">
               <input type="checkbox" name="addWatermark" className="h-4 w-4" />
-              Add translator watermark to the AI draft
+              Add a text stamp to the AI draft
             </label>
             <Button className="h-12 rounded-full bg-foreground text-background hover:bg-foreground/90" disabled={loading}>
               {loading ? "Processing..." : "Upload and translate"}
