@@ -67,6 +67,24 @@ const translationJobSchema = new Schema(
       default: "",
       trim: true,
     },
+    watermarked: {
+      type: Boolean,
+      default: false,
+    },
+    signature: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    signatureSvgUrl: {
+      type: String,
+      default: null,
+      trim: true,
+    },
+    signatureSvgData: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

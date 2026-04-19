@@ -33,7 +33,20 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   limits: {
-    fileSize: 50 * 1024 * 1024,
+    fileSize: 100 * 1024 * 1024,
+  },
+  fileFilter: (_req, file, cb) => {
+    const allowedMimes = [
+      "text/plain",
+      "application/pdf",
+      "image/svg+xml",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
+    if (allowedMimes.includes(file.mimetype) || file.originalname.endsWith(".svg")) {
+      cb(null, true);
+    } else {
+      cb(new Error(`File type not supported: ${file.mimetype}`));
+    }
   },
 });
 
@@ -212,18 +225,29 @@ app.post("/api/jobs/upload", upload.single("originalFile"), async (req: Request,
 app.post("/api/jobs/:id/translate", authenticate, async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
-    const { sourceText } = req.body;
+    const { sourceText, addWatermark } = req.body;
 
     if (!sourceText) {
       return res.status(400).json({ error: "sourceText is required for translation" });
     }
 
-    const job = await TranslationJob.findById(id);
+    const job = await TranslationJob.findById(id).populate("user", "fullName email");
     if (!job) {
       return res.status(404).json({ error: "Translation job not found" });
     }
 
-    const translatedText = await translateTextWithGemini(sourceText, job.targetLanguage);
+    let translatedText = await translateTextWithGemini(sourceText, job.targetLanguage);
+    
+    // Add watermark/signature if requested
+    if (addWatermark) {
+      const user = job.user as any;
+      const now = new Date();
+      const signature = `\n\n---\n📝 Translated by: ${user.fullName}\n📧 Email: ${user.email}\n📅 Date: ${now.toLocaleString()}\n📄 Original file: ${job.originalFileName}\n---`;
+      translatedText = translatedText + signature;
+      job.watermarked = true;
+      job.signature = signature;
+    }
+    
     const translatedFileName = `translated-${job._id}.txt`;
     const translatedFilePath = path.join(uploadDir, translatedFileName);
     fs.writeFileSync(translatedFilePath, translatedText, "utf-8");
