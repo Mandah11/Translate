@@ -4,17 +4,19 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { useTranslation } from "@/components/language-provider";
 
 const navLinks = [
-  { name: "Features", href: "#features" },
-  { name: "How it works", href: "#how-it-works" },
-  { name: "Developers", href: "#developers" },
-  { name: "Pricing", href: "#pricing" },
+  { key: "features", href: "#features" },
+  { key: "howItWorks", href: "#how-it-works" },
+  { key: "developers", href: "#developers" },
+  { key: "pricing", href: "#pricing" },
 ];
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { strings, language, toggleLanguage } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,11 +62,11 @@ export function Navigation() {
           <div className="hidden md:flex items-center gap-12">
             {navLinks.map((link) => (
               <a
-                key={link.name}
+                key={link.key}
                 href={link.href}
                 className="text-sm text-foreground/70 hover:text-foreground transition-colors duration-300 relative group"
               >
-                {link.name}
+                {strings.nav[link.key as keyof typeof strings.nav]}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-foreground transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
@@ -72,18 +74,26 @@ export function Navigation() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
+            <Button
+              variant="outline"
+              size="sm"
+              className={`rounded-full transition-all duration-500 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
+              onClick={toggleLanguage}
+            >
+              {language.toUpperCase()} / {strings.nav.languageLabel}
+            </Button>
             <Link
               href="/admin"
               className={`text-foreground/70 hover:text-foreground transition-all duration-500 ${isScrolled ? "text-xs" : "text-sm"}`}
             >
-              Admin desk
+              {strings.nav.adminDesk}
             </Link>
             <Button
               asChild
               size="sm"
               className={`bg-foreground hover:bg-foreground/90 text-background rounded-full transition-all duration-500 ${isScrolled ? "px-4 h-8 text-xs" : "px-6"}`}
             >
-              <Link href="/user">Open workspace</Link>
+              <Link href="/user">{strings.nav.openWorkspace}</Link>
             </Button>
           </div>
 
@@ -116,7 +126,7 @@ export function Navigation() {
           <div className="flex-1 flex flex-col justify-center gap-8">
             {navLinks.map((link, i) => (
               <a
-                key={link.name}
+                key={link.key}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`text-5xl font-display text-foreground hover:text-muted-foreground transition-all duration-500 ${
@@ -128,7 +138,7 @@ export function Navigation() {
                   transitionDelay: isMobileMenuOpen ? `${i * 75}ms` : "0ms",
                 }}
               >
-                {link.name}
+                {strings.nav[link.key as keyof typeof strings.nav]}
               </a>
             ))}
           </div>
@@ -143,19 +153,26 @@ export function Navigation() {
             style={{ transitionDelay: isMobileMenuOpen ? "300ms" : "0ms" }}
           >
             <Button
+              variant="outline"
+              className="rounded-full h-14 text-base"
+              onClick={toggleLanguage}
+            >
+              {language.toUpperCase()} / {strings.nav.languageLabel}
+            </Button>
+            <Button
               asChild
               variant="outline"
               className="flex-1 rounded-full h-14 text-base"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <Link href="/admin">Admin desk</Link>
+              <Link href="/admin">{strings.nav.adminDesk}</Link>
             </Button>
             <Button
               asChild
               className="flex-1 bg-foreground text-background rounded-full h-14 text-base"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <Link href="/user">Open workspace</Link>
+              <Link href="/user">{strings.nav.openWorkspace}</Link>
             </Button>
           </div>
         </div>

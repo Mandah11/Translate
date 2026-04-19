@@ -2,38 +2,16 @@
 
 import { useEffect, useState, useRef } from "react";
 import { Shield, Lock, Eye, FileCheck } from "lucide-react";
+import { useTranslation } from "@/components/language-provider";
 
-const securityFeatures = [
-  {
-    icon: Shield,
-    title: "SOC 2 Type II",
-    description:
-      "Independently audited security controls with continuous monitoring.",
-  },
-  {
-    icon: Lock,
-    title: "End-to-end encryption",
-    description: "AES-256 encryption for data at rest and TLS 1.3 in transit.",
-  },
-  {
-    icon: Eye,
-    title: "Zero-trust architecture",
-    description:
-      "Every request is authenticated and authorized. No exceptions.",
-  },
-  {
-    icon: FileCheck,
-    title: "GDPR & HIPAA",
-    description:
-      "Full compliance with data protection and healthcare regulations.",
-  },
-];
-
-const certifications = ["SOC 2", "ISO 27001", "HIPAA", "GDPR", "CCPA"];
+const iconMap = [Shield, Lock, Eye, FileCheck];
 
 export function SecuritySection() {
+  const { strings } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const securityFeatures = strings.securitySection.features;
+  const certifications = strings.securitySection.certifications;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -65,17 +43,15 @@ export function SecuritySection() {
           >
             <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
               <span className="w-8 h-px bg-foreground/30" />
-              Security
+              {strings.securitySection.label}
             </span>
             <h2 className="text-4xl lg:text-6xl font-display tracking-tight mb-8">
-              Trust is
+              {strings.securitySection.headingLine1}
               <br />
-              non-negotiable.
+              {strings.securitySection.headingLine2}
             </h2>
             <p className="text-xl text-muted-foreground leading-relaxed mb-12">
-              Enterprise-grade security isn&apos;t optional. It&apos;s built
-              into every layer of our platform, from infrastructure to
-              application.
+              {strings.securitySection.description}
             </p>
 
             {/* Certifications */}
@@ -98,31 +74,34 @@ export function SecuritySection() {
 
           {/* Right: Features */}
           <div className="grid gap-6">
-            {securityFeatures.map((feature, index) => (
-              <div
-                key={feature.title}
-                className={`p-6 border border-foreground/10 hover:border-foreground/20 transition-all duration-500 group ${
-                  isVisible
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 translate-x-8"
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="shrink-0 w-10 h-10 flex items-center justify-center border border-foreground/10 group-hover:bg-foreground group-hover:text-background transition-colors duration-300">
-                    <feature.icon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-medium mb-1 group-hover:translate-x-1 transition-transform duration-300">
-                      {feature.title}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {feature.description}
-                    </p>
+            {securityFeatures.map((feature, index) => {
+              const IconComponent = iconMap[index % iconMap.length];
+              return (
+                <div
+                  key={feature.title}
+                  className={`p-6 border border-foreground/10 hover:border-foreground/20 transition-all duration-500 group ${
+                    isVisible
+                      ? "opacity-100 translate-x-0"
+                      : "opacity-0 translate-x-8"
+                  }`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="shrink-0 w-10 h-10 flex items-center justify-center border border-foreground/10 group-hover:bg-foreground group-hover:text-background transition-colors duration-300">
+                      <IconComponent className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-medium mb-1 group-hover:translate-x-1 transition-transform duration-300">
+                        {feature.title}
+                      </h3>
+                      <p className="text-muted-foreground">
+                        {feature.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

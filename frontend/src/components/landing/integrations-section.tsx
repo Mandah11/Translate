@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useTranslation } from "@/components/language-provider";
 
 const integrations = [
   { name: "GitHub", category: "Version Control" },
@@ -18,8 +19,10 @@ const integrations = [
 ];
 
 export function IntegrationsSection() {
+  const { strings } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const integrationsList = strings.integrationsSection.integrations;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -48,16 +51,16 @@ export function IntegrationsSection() {
         >
           <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
             <span className="w-8 h-px bg-foreground/30" />
-            Integrations
+            {strings.integrationsSection.label}
             <span className="w-8 h-px bg-foreground/30" />
           </span>
           <h2 className="text-4xl lg:text-6xl font-display tracking-tight mb-6">
-            Works with everything
+            {strings.integrationsSection.headingLine1}
             <br />
-            you already use.
+            {strings.integrationsSection.headingLine2}
           </h2>
           <p className="text-xl text-muted-foreground">
-            200+ pre-built integrations. Connect your entire stack in minutes.
+            {strings.integrationsSection.description}
           </p>
         </div>
       </div>
@@ -67,7 +70,7 @@ export function IntegrationsSection() {
         <div className="flex gap-6 marquee">
           {[...Array(2)].map((_, setIndex) => (
             <div key={setIndex} className="flex gap-6 shrink-0">
-              {integrations.map((integration) => (
+              {integrationsList.map((integration) => (
                 <div
                   key={`${integration.name}-${setIndex}`}
                   className="shrink-0 px-8 py-6 border border-foreground/10 hover:border-foreground/30 hover:bg-foreground/[0.02] transition-all duration-300 group"
@@ -90,7 +93,7 @@ export function IntegrationsSection() {
         <div className="flex gap-6 marquee-reverse">
           {[...Array(2)].map((_, setIndex) => (
             <div key={setIndex} className="flex gap-6 shrink-0">
-              {[...integrations].reverse().map((integration) => (
+              {[...integrationsList].reverse().map((integration) => (
                 <div
                   key={`${integration.name}-reverse-${setIndex}`}
                   className="shrink-0 px-8 py-6 border border-foreground/10 hover:border-foreground/30 hover:bg-foreground/[0.02] transition-all duration-300 group"

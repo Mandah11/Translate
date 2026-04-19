@@ -2,59 +2,12 @@
 
 import { useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
-
-const plans = [
-  {
-    name: "Starter",
-    description: "For individuals and small projects",
-    price: { monthly: 0, annual: 0 },
-    features: [
-      "Up to 3 projects",
-      "1GB storage",
-      "Community support",
-      "Basic analytics",
-      "SSL certificates",
-    ],
-    cta: "Start free",
-    popular: false,
-  },
-  {
-    name: "Pro",
-    description: "For growing teams and businesses",
-    price: { monthly: 29, annual: 24 },
-    features: [
-      "Unlimited projects",
-      "100GB storage",
-      "Priority support",
-      "Advanced analytics",
-      "Custom domains",
-      "Team collaboration",
-      "API access",
-    ],
-    cta: "Start trial",
-    popular: true,
-  },
-  {
-    name: "Enterprise",
-    description: "For large-scale operations",
-    price: { monthly: null, annual: null },
-    features: [
-      "Everything in Pro",
-      "Unlimited storage",
-      "24/7 dedicated support",
-      "Custom integrations",
-      "SLA guarantee",
-      "On-premise option",
-      "Security audit",
-      "Custom contracts",
-    ],
-    cta: "Contact sales",
-    popular: false,
-  },
-];
+import { useTranslation } from "@/components/language-provider";
 
 export function PricingSection() {
+  const { strings } = useTranslation();
   const [isAnnual, setIsAnnual] = useState(true);
+  const plans = strings.pricingSection.plans;
 
   return (
     <section
@@ -65,15 +18,15 @@ export function PricingSection() {
         {/* Header */}
         <div className="max-w-3xl mb-20">
           <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase block mb-6">
-            Pricing
+            {strings.pricingSection.label}
           </span>
           <h2 className="font-display text-5xl md:text-6xl lg:text-7xl tracking-tight text-foreground mb-6">
-            Simple, transparent
+            {strings.pricingSection.headingLine1}
             <br />
-            <span className="text-stroke">pricing</span>
+            <span className="text-stroke">{strings.pricingSection.headingHighlight}</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-xl">
-            Start free and scale as you grow. No hidden fees, no surprises.
+            {strings.pricingSection.description}
           </p>
         </div>
 
@@ -84,7 +37,7 @@ export function PricingSection() {
               !isAnnual ? "text-foreground" : "text-muted-foreground"
             }`}
           >
-            Monthly
+            {strings.pricingSection.monthly}
           </span>
           <button
             onClick={() => setIsAnnual(!isAnnual)}
@@ -101,11 +54,11 @@ export function PricingSection() {
               isAnnual ? "text-foreground" : "text-muted-foreground"
             }`}
           >
-            Annual
+            {strings.pricingSection.annual}
           </span>
           {isAnnual && (
             <span className="ml-2 px-2 py-1 bg-foreground text-primary-foreground text-xs font-mono">
-              Save 17%
+              {strings.pricingSection.saveLabel}
             </span>
           )}
         </div>
@@ -185,12 +138,12 @@ export function PricingSection() {
 
         {/* Bottom Note */}
         <p className="mt-12 text-center text-sm text-muted-foreground">
-          All plans include automatic updates, HTTPS, and DDoS protection.{" "}
+          {strings.pricingSection.bottomNote}{" "}
           <a
             href="#"
             className="underline underline-offset-4 hover:text-foreground transition-colors"
           >
-            Compare all features
+            {strings.pricingSection.compareFeatures}
           </a>
         </p>
       </div>

@@ -1,37 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "@/components/language-provider";
 
-const features = [
-  {
-    number: "01",
-    title: "Instant Deployment",
-    description:
-      "Push to production in seconds. Our edge network ensures your applications load instantly, anywhere in the world.",
-    visual: "deploy",
-  },
-  {
-    number: "02",
-    title: "AI-Native Workflows",
-    description:
-      "Build intelligent applications with built-in AI capabilities. From inference to training, everything scales automatically.",
-    visual: "ai",
-  },
-  {
-    number: "03",
-    title: "Real-time Collaboration",
-    description:
-      "Work together seamlessly. Live preview, instant feedback, and version control that actually makes sense.",
-    visual: "collab",
-  },
-  {
-    number: "04",
-    title: "Enterprise Security",
-    description:
-      "Bank-grade encryption, SOC 2 compliance, and granular access controls. Your data stays yours.",
-    visual: "security",
-  },
-];
+type FeatureItem = {
+  number: string;
+  title: string;
+  description: string;
+  visual: string;
+};
 
 function roundSvgValue(value: number) {
   return Number(value.toFixed(6));
@@ -395,7 +372,7 @@ function FeatureCard({
   feature,
   index,
 }: {
-  feature: (typeof features)[0];
+  feature: FeatureItem;
   index: number;
 }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -453,8 +430,10 @@ function FeatureCard({
 }
 
 export function FeaturesSection() {
+  const { strings } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const features = strings.featuresSection.items;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -475,7 +454,7 @@ export function FeaturesSection() {
         <div className="mb-16 lg:mb-24">
           <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
             <span className="w-8 h-px bg-foreground/30" />
-            Capabilities
+            {strings.featuresSection.label}
           </span>
           <h2
             className={`text-4xl lg:text-6xl font-display tracking-tight transition-all duration-700 ${
@@ -484,10 +463,10 @@ export function FeaturesSection() {
                 : "opacity-0 translate-y-4"
             }`}
           >
-            Everything you need.
+            {strings.featuresSection.headingLine1}
             <br />
             <span className="text-muted-foreground">
-              Nothing you don&apos;t.
+              {strings.featuresSection.headingLine2}
             </span>
           </h2>
         </div>

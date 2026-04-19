@@ -5,28 +5,23 @@ import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "@/components/language-provider";
 
 import { AnimatedSphere } from "./animated-sphere";
-
-const words = ["create", "build", "scale", "ship"];
-const showcaseStats = [
-  { value: "20 days", label: "saved on builds", company: "NETFLIX" },
-  { value: "98%", label: "faster deployment", company: "STRIPE" },
-  { value: "300%", label: "throughput increase", company: "LINEAR" },
-  { value: "6x", label: "faster to ship", company: "NOTION" },
-] as const;
 
 export function HeroSection() {
   const [isVisible] = useState(true);
   const [wordIndex, setWordIndex] = useState(0);
+  const { strings } = useTranslation();
+  const showcaseStats = strings.hero.stats;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % words.length);
+      setWordIndex((prev) => (prev + 1) % strings.hero.words.length);
     }, 2500);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [strings.hero.words.length]);
 
   return (
     <section className="relative min-h-screen overflow-hidden">
@@ -67,22 +62,22 @@ export function HeroSection() {
         >
           <span className="inline-flex items-center gap-3 font-mono text-sm text-muted-foreground">
             <span className="h-px w-8 bg-foreground/30" />
-            The platform for modern teams
+            {strings.hero.tagline}
           </span>
         </div>
 
-        <div className="mb-12">
-          <h1
-            className={`font-display text-[clamp(3rem,12vw,10rem)] leading-[0.9] tracking-tight transition-all duration-1000 ${
-              isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-            }`}
-          >
-            <span className="block">The platform</span>
+        <div
+          className={`mb-12 transition-all duration-1000 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          }`}
+        >
+          <h1 className="font-display text-[clamp(3rem,12vw,10rem)] leading-[0.9] tracking-tight">
+            <span className="block">{strings.hero.headingLine1}</span>
             <span className="block">
-              to{" "}
+              {strings.hero.headingLine2}{" "}
               <span className="relative inline-block">
                 <span key={wordIndex} className="inline-flex">
-                  {words[wordIndex].split("").map((char, i) => (
+                  {strings.hero.words[wordIndex].split("").map((char, i) => (
                     <span
                       key={`${wordIndex}-${i}`}
                       className="inline-block animate-char-in"
@@ -104,8 +99,7 @@ export function HeroSection() {
               isVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}
           >
-            Your toolkit to stop configuring and start innovating. Securely
-            build, deploy, and scale the best experiences.
+            {strings.hero.description}
           </p>
 
           <div
@@ -119,7 +113,7 @@ export function HeroSection() {
               className="group h-14 rounded-full bg-foreground px-8 text-base text-background hover:bg-foreground/90"
             >
               <Link href="/user">
-                Open user workspace
+                {strings.hero.openUserWorkspace}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
@@ -129,7 +123,7 @@ export function HeroSection() {
               variant="outline"
               className="h-14 rounded-full border-foreground/20 px-8 text-base hover:bg-foreground/5"
             >
-              <Link href="/admin">Open admin desk</Link>
+              <Link href="/admin">{strings.hero.openAdminDesk}</Link>
             </Button>
           </div>
         </div>

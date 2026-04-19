@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useTranslation } from "@/components/language-provider";
 
 const locations = [
   { city: "San Francisco", region: "US West", latency: "12ms" },
@@ -12,9 +13,11 @@ const locations = [
 ];
 
 export function InfrastructureSection() {
+  const { strings } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [activeLocation, setActiveLocation] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
+  const stats = strings.infrastructureSection.stats;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -52,41 +55,29 @@ export function InfrastructureSection() {
           >
             <span className="inline-flex items-center gap-3 text-sm font-mono text-muted-foreground mb-6">
               <span className="w-8 h-px bg-foreground/30" />
-              Infrastructure
+              {strings.infrastructureSection.label}
             </span>
             <h2 className="text-4xl lg:text-6xl font-display tracking-tight mb-8">
-              Global by
+              {strings.infrastructureSection.headingLine1}
               <br />
-              default.
+              {strings.infrastructureSection.headingLine2}
             </h2>
             <p className="text-xl text-muted-foreground leading-relaxed mb-12">
-              Deploy once, run everywhere. Our edge network spans 17 data
-              centers across 6 continents, delivering sub-50ms latency to 99% of
-              the world.
+              {strings.infrastructureSection.description}
             </p>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-8">
-              <div>
-                <div className="text-4xl lg:text-5xl font-display mb-2">17</div>
-                <div className="text-sm text-muted-foreground">
-                  Data centers
+              {stats.map((stat) => (
+                <div key={stat.label}>
+                  <div className="text-4xl lg:text-5xl font-display mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {stat.label}
+                  </div>
                 </div>
-              </div>
-              <div>
-                <div className="text-4xl lg:text-5xl font-display mb-2">
-                  99.99%
-                </div>
-                <div className="text-sm text-muted-foreground">Uptime SLA</div>
-              </div>
-              <div>
-                <div className="text-4xl lg:text-5xl font-display mb-2">
-                  &lt;50ms
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  Global latency
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -102,11 +93,11 @@ export function InfrastructureSection() {
               {/* Header */}
               <div className="px-6 py-4 border-b border-foreground/10 flex items-center justify-between">
                 <span className="text-sm font-mono text-muted-foreground">
-                  Edge Network
+                  {strings.infrastructureSection.networkLabel}
                 </span>
                 <span className="flex items-center gap-2 text-xs font-mono text-green-600">
                   <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  All operational
+                  {strings.infrastructureSection.allOperational}
                 </span>
               </div>
 
