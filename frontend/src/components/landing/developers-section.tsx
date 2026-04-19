@@ -143,7 +143,7 @@ export function DevelopersSection() {
                   type="button"
                   onClick={handleCopy}
                   className="px-4 py-4 text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="Copy code"
+                  aria-label={strings.developersSection.copyLabel}
                 >
                   {copied ? (
                     <Check className="w-4 h-4 text-green-600" />
